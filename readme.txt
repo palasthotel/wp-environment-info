@@ -30,6 +30,10 @@ Show environmental info on your admin bar so you will never accidentally edit pr
 
 == Changelog ==
 
+= 1.1.0 =
+* Feature: Identify environment by hostname
+* Feature: Tool page with overview of all defined environments
+
 = 1.0.0 =
 * Submitted to wordpress.org plugin repo version
 
