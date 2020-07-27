@@ -3,9 +3,9 @@
 /**
  * Plugin Name:       Environment Info
  * Description:       Admin bar label to quick peed on which environment you're on
- * Version:           1.0.0
- * Requires at least: 4.0.0
- * Tested up to:      5.3.2
+ * Version:           1.1.0
+ * Requires at least: 5.0.0
+ * Tested up to:      5.4.2
  * Author:            PALASTHOTEL by Edward
  * Author URI:        http://www.palasthotel.de
  * License:           GPL-2.0+
@@ -16,6 +16,8 @@
 
 namespace Palasthotel\WordPress\EnvironmentInfo;
 
+use WP_Admin_Bar;
+
 const FILTER_IDENTIFY_SITE = "environment_info_identify_site";
 
 add_filter(FILTER_IDENTIFY_SITE, function($site){
@@ -24,18 +26,20 @@ add_filter(FILTER_IDENTIFY_SITE, function($site){
 	if($site != null) return $site;
 
 	// if no site settings found skip
-	if(!defined('ENVIRONMENT_INFO_SETTINGS') || !is_array(ENVIRONMENT_INFO_SETTINGS)) return $site;
+	if(!defined('ENVIRONMENT_INFO_SETTINGS') || !is_array(ENVIRONMENT_INFO_SETTINGS)) return null;
 
 	$settings = ENVIRONMENT_INFO_SETTINGS;
 	$activeEvn = array_values(array_filter($settings, function($site){
-		return strpos(dirname(__FILE__), $site["path"]);
+		if(isset($site["hostname"]) && gethostname() === $site["hostname"]) return true;
+		if(isset($site["path"]) && strpos(dirname(__FILE__), $site["path"]) !== false ) return true;
+		return false;
 	}));
 
 	// if found more than one site skip and error log
 	if(count($activeEvn) !== 1){
 		error_log(json_encode($activeEvn));
 		error_log("Environment Info found more than one matching site...");
-		return $site;
+		return null;
 	}
 
 	return $activeEvn[0];
@@ -47,7 +51,7 @@ function isValidEnvInfo($env){
 
 function admin_bar(){
 	/**
-	 * @var \WP_Admin_Bar $wp_admin_bar
+	 * @var WP_Admin_Bar $wp_admin_bar
 	 */
 	global $wp_admin_bar;
 

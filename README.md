@@ -9,12 +9,18 @@ Activate plugin and add `ENVIRONMENT_INFO_SETTINGS` constant to wp-config.php.
 ```php
 define( 'ENVIRONMENT_INFO_SETTINGS', [
 	[
-		"pathPart" => "butler",
+        "path" => "butler",
 		"title" => "🤖 Local Butler DEV",
 	],
 	[
-		"pathPart" => "s1234",
+		"path" => "s1234",
 		"title" => "🤖 Freistil Site s1234",
+		"background" => "#238422",
+		"color" => "white",
+	],
+    [
+		"hostname" => "host1",
+		"title" => "🤖 FlyingCircus Host1",
 		"background" => "#238422",
 		"color" => "white",
 	]
