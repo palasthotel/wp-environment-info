@@ -126,7 +126,7 @@ function add_info_page(){
 		__NAMESPACE__."\\render_info_pages"
 	);
 }
-add_action('init', __NAMESPACE__."\add_info_page");
+add_action('admin_menu', __NAMESPACE__."\add_info_page");
 
 /**
  * renders info page content
