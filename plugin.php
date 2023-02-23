@@ -3,9 +3,9 @@
 /**
  * Plugin Name:       Environment Info
  * Description:       Admin bar label to quick peed on which environment you're on
- * Version:           1.1.0
+ * Version:           1.1.1
  * Requires at least: 5.0.0
- * Tested up to:      5.4.2
+ * Tested up to:      6.1.1
  * Author:            PALASTHOTEL by Edward
  * Author URI:        http://www.palasthotel.de
  * License:           GPL-2.0+
