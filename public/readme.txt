@@ -4,7 +4,7 @@ Donate link: http://palasthotel.de/
 Tags: information, dashboard, admin bar
 Requires at least: 5.0
 Tested up to: 7.0.2
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPL-3.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -29,6 +29,10 @@ Show environmental info on your admin bar so you will never accidentally edit pr
 
 
 == Changelog ==
+
+= 1.1.2 =
+**Bug Fixes**
+* point the admin bar at the info page and escape rendered output (ec0ed92)
 
 = 1.1.1 =
 * Bufix: Removed a fatal error caused by wrong hook
