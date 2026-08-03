@@ -1,4 +1,4 @@
-# Environment Info
+# Environment Info (WordPress-Plugin)
 
 Shows which environment a WordPress install is running on, as a coloured label in
 the admin bar. Never again delete production content because you thought you were
