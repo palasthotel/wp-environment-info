@@ -16,6 +16,8 @@
 
 namespace Palasthotel\WordPress\EnvironmentInfo;
 
+defined( 'ABSPATH' ) || exit;
+
 use WP_Admin_Bar;
 
 const FILTER_IDENTIFY_SITE = "environment_info_identify_site";
@@ -78,8 +80,11 @@ function isActiveEnv($site){
  * @return object
  */
 function getEnvColorsStyles($env){
-	$background = (isset($env["background"]))? "background: ".$env["background"].";": "";
-	$color = (isset($env["color"]))? "color: ".$env["color"].";":"";
+	// The values come from the ENVIRONMENT_INFO_SETTINGS constant, so from whoever
+	// can edit wp-config.php - but they end up in style attributes, and a stray
+	// quote would break out of one.
+	$background = ( isset( $env["background"] ) ) ? "background: " . esc_attr( $env["background"] ) . ";" : "";
+	$color      = ( isset( $env["color"] ) ) ? "color: " . esc_attr( $env["color"] ) . ";" : "";
 	return (object)array(
 		"fg" => $color,
 		"bg" => $background,
@@ -106,8 +111,16 @@ function admin_bar(){
 
 	$wp_admin_bar->add_node( array(
 		'id'    => "environment-info",
-		'title' => "<div style='margin-left:-10px;padding:0 10px;$colors->bg$colors->fg'>$label</div>",
-		'href' => admin_url('admin.php?page=environment_info'),
+		'title' => sprintf(
+			"<div style='margin-left:-10px;padding:0 10px;%s%s'>%s</div>",
+			$colors->bg,
+			$colors->fg,
+			esc_html( $label )
+		),
+		// The info page is a submenu of tools.php, so that is where it lives.
+		// admin.php?page=environment_info answers "you are not allowed to access
+		// this page", because no top-level page is registered under that slug.
+		'href'  => admin_url( 'tools.php?page=environment_info' ),
 	) );
 
 }
@@ -161,10 +174,8 @@ function render_info_pages(){
 	<div class="wrap">
 		<h2>Environments</h2>
 		<?php
-		$hostname = gethostname();
-		echo "<p>Hostname: <code>$hostname</code></p>";
-		$path = dirname(__FILE__);
-		echo "<p>Path: <code>$path</code></p>";
+		printf( "<p>Hostname: <code>%s</code></p>", esc_html( gethostname() ) );
+		printf( "<p>Path: <code>%s</code></p>", esc_html( dirname( __FILE__ ) ) );
 		?>
 		<ul class="environments">
 		<?php
@@ -189,18 +200,16 @@ function render_info_page($site){
 	$isActiveClass = $isActive ? "is-active": "";
 	$colors = getEnvColorsStyles($site);
 
-	echo "<div class='env $isActiveClass' style='$colors->bg'>";
-		echo "<div class='env-title' style='$colors->fg'>$title</div>";
+	printf( "<div class='env %s' style='%s'>", esc_attr( $isActiveClass ), $colors->bg );
+		printf( "<div class='env-title' style='%s'>%s</div>", $colors->fg, esc_html( $title ) );
 		echo "<div class='env-info'>";
 			echo "<p class='env-info' style='$colors->fg'>";
 			$info = [];
-			if(isset($site["hostname"])){
-				$hostname = $site["hostname"];
-				$info[] = "Hostname: <code>$hostname</code>";
+			if ( isset( $site["hostname"] ) ) {
+				$info[] = sprintf( "Hostname: <code>%s</code>", esc_html( $site["hostname"] ) );
 			}
-			if(isset($site["path"])){
-				$path = $site["path"];
-				$info[] = "Path: <code>$path</code>";
+			if ( isset( $site["path"] ) ) {
+				$info[] = sprintf( "Path: <code>%s</code>", esc_html( $site["path"] ) );
 			}
 			echo implode("<br/>", $info);
 			echo "</p>";
