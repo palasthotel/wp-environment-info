@@ -1,5 +1,5 @@
 === Environment Info ===
-Contributors: edwardbock
+Contributors: palasthotel, edwardbock, janaeggebrecht
 Donate link: http://palasthotel.de/
 Tags: information, dashboard, admin bar
 Requires at least: 5.0
@@ -50,4 +50,3 @@ Show environmental info on your admin bar so you will never accidentally edit pr
 == Arbitrary section ==
 
 There’s a documentation at https://github.com/palasthotel/wp-environment-info
-
