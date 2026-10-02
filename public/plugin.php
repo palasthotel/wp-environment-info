@@ -2,11 +2,11 @@
 
 /**
  * Plugin Name:       Environment Info
- * Description:       Admin bar label to quick peed on which environment you're on
+ * Description:       Shows in the admin bar which environment you are on
  * Version:           1.1.2
  * Requires at least: 5.0.0
- * Tested up to:      7.0.2
- * Author:            Palasthotel <rezeption@palasthotel.de>
+ * Tested up to:      7.1.2
+ * Author:            Palasthotel <webmaster@palasthotel.de>
  * Author URI:        https://palasthotel.de
  * License:           GPL-3.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
@@ -68,8 +68,10 @@ function isValidEnvInfo($site){
 function isActiveEnv($site){
 	if(!isValidEnvInfo($site)) return false;
 
-	if(isset($site["hostname"]) && gethostname() === $site["hostname"]) return true;
-	if(isset($site["path"]) && strpos(dirname(__FILE__), $site["path"]) !== false ) return true;
+	// An empty value identifies nothing. On PHP 8 strpos() finds an empty path in
+	// every path, so an environment with "path" => "" matched on every server.
+	if(!empty($site["hostname"]) && gethostname() === $site["hostname"]) return true;
+	if(!empty($site["path"]) && is_string($site["path"]) && strpos(dirname(__FILE__), $site["path"]) !== false ) return true;
 
 	return false;
 }
