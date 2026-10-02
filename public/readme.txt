@@ -4,7 +4,7 @@ Donate link: https://palasthotel.de/
 Tags: information, dashboard, admin bar
 Requires at least: 5.0
 Tested up to: 7.1.2
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPL-3.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -42,6 +42,10 @@ Exactly one entry has to match. With none, or with more than one, the label read
 Every logged-in user who sees the admin bar. The overview under Tools > Environment Info requires the `manage_options` capability.
 
 == Changelog ==
+
+= 1.1.3 =
+**Bug Fixes**
+* stop an empty path from matching every server (00ae461)
 
 = 1.1.2 =
 **Bug Fixes**
