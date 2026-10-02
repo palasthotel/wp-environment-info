@@ -68,8 +68,10 @@ function isValidEnvInfo($site){
 function isActiveEnv($site){
 	if(!isValidEnvInfo($site)) return false;
 
-	if(isset($site["hostname"]) && gethostname() === $site["hostname"]) return true;
-	if(isset($site["path"]) && strpos(dirname(__FILE__), $site["path"]) !== false ) return true;
+	// An empty value identifies nothing. On PHP 8 strpos() finds an empty path in
+	// every path, so an environment with "path" => "" matched on every server.
+	if(!empty($site["hostname"]) && gethostname() === $site["hostname"]) return true;
+	if(!empty($site["path"]) && is_string($site["path"]) && strpos(dirname(__FILE__), $site["path"]) !== false ) return true;
 
 	return false;
 }
