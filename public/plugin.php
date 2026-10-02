@@ -3,7 +3,7 @@
 /**
  * Plugin Name:       Environment Info
  * Description:       Shows in the admin bar which environment you are on
- * Version:           1.1.2
+ * Version:           1.1.3
  * Requires at least: 5.0.0
  * Tested up to:      7.1.2
  * Author:            Palasthotel <webmaster@palasthotel.de>
