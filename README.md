@@ -18,19 +18,19 @@ Activate the plugin and add the `ENVIRONMENT_INFO_SETTINGS` constant to
 ```php
 define( 'ENVIRONMENT_INFO_SETTINGS', [
 	[
-		"path"  => "butler",
-		"title" => "🤖 Local Butler DEV",
+		"path"  => "/Users/",
+		"title" => "🤖 Local",
 	],
 	[
-		"path"       => "s1234",
-		"title"      => "🤖 Freistil Site s1234",
-		"background" => "#238422",
+		"path"       => "/var/www/staging",
+		"title"      => "🤖 Staging",
+		"background" => "#b45309",
 		"color"      => "white",
 	],
 	[
-		"hostname"   => "host1",
-		"title"      => "🤖 FlyingCircus Host1",
-		"background" => "#238422",
+		"hostname"   => "web-prod-1",
+		"title"      => "🤖 Production",
+		"background" => "#b91c1c",
 		"color"      => "white",
 	],
 ] );
@@ -38,9 +38,9 @@ define( 'ENVIRONMENT_INFO_SETTINGS', [
 
 Each entry needs a `title` and is matched by either `hostname`, compared against
 `gethostname()`, or `path`, which matches when it appears anywhere in the plugin's
-own directory path. **Exactly one entry has to match**: with none, the admin bar
-reads *🤖 Unknown Server*, and with more than one the plugin shows nothing and
-writes the ambiguity to the error log.
+own directory path. Empty values match nothing. **Exactly one entry has to
+match**: with none, or with more than one, the admin bar reads *🤖 Unknown Server*;
+more than one match is also written to the error log.
 
 `background` and `color` are written into a `style` attribute, so any CSS colour
 value works.
@@ -88,7 +88,6 @@ repository-only.
 | `assets/` | media for the WordPress.org plugin page — not part of the download |
 | `plugin.php` | DEV wrapper, loads `public/plugin.php` when the repository is checked out into `wp-content/plugins/` |
 | `LICENSE` | copy of the licence text so GitHub detects it |
-| `bin/` | release helper scripts |
 | `.github/workflows/` | CI/CD — see [.github/WORKFLOWS.md](.github/WORKFLOWS.md) |
 
 ## Releasing
@@ -102,14 +101,23 @@ and merge the release PR:
 fix: …   → patch    feat: …  → minor    feat!: … → major
 ```
 
-The full pipeline is documented in [.github/WORKFLOWS.md](.github/WORKFLOWS.md),
-the commit conventions in [CONTRIBUTING.md](CONTRIBUTING.md).
+The workflows call the shared ones in
+[palasthotel/github-workflows](https://github.com/palasthotel/github-workflows) — see
+[.github/WORKFLOWS.md](.github/WORKFLOWS.md). The commit conventions are in
+[CONTRIBUTING.md](CONTRIBUTING.md).
 
-## Building locally
+## Packing locally
+
+There is nothing to build. With
+[palasthotel/github-workflows](https://github.com/palasthotel/github-workflows)
+checked out next to this repository:
 
 ```sh
-bash bin/pack.sh    # → environment-info.zip
+SLUG=environment-info bash ../github-workflows/wp-plugin/bin/pack.sh    # → environment-info.zip
 ```
+
+`npx @wordpress/env start` runs a local WordPress with the repository as the plugin,
+no configuration file needed.
 
 ## License
 

@@ -55,6 +55,16 @@ That includes hardening. Blocking direct access to a file that is not part of th
 download is `chore:`, not `fix:` — nothing changes for anyone who installed the
 plugin.
 
+## Repository layout
+
+`public/` is exactly what ships to WordPress.org; `plugin.php` in the root is a
+development wrapper that loads it and is never deployed.
+
+The main file `public/plugin.php` must keep its name. WordPress identifies an
+installed plugin by `<directory>/<main file>` and stores that pair in
+`active_plugins`; renaming it deactivates the plugin on every site at the next
+update.
+
 ## Versions
 
 Never edit version numbers by hand. `version.txt`, `CHANGELOG.md`,
@@ -68,8 +78,8 @@ tested-up-to) are of course done by hand; just leave `Stable tag:` and the
 
 ## Checks
 
-Every PR runs `php -l` against PHP 7.4, 8.2, 8.3 and 8.4, and packs the plugin so
-a broken `bin/pack.sh` surfaces in the pull request.
+Every PR runs `php -l` against PHP 7.4, 8.2, 8.3 and 8.4, packs the plugin and checks
+the payload, and checks that the version carriers agree.
 
 The plugin declares `Requires at least: 5.0` (WordPress) and no `Requires PHP` at
 all — the code uses nothing newer than PHP 5.4, and declaring a floor would only
