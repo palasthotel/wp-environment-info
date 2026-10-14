@@ -4,13 +4,12 @@
  * Plugin Name:       Environment Info
  * Description:       Shows in the admin bar which environment you are on
  * Version:           1.1.3
- * Requires at least: 5.0.0
+ * Requires at least: 5.0
  * Author:            Palasthotel <webmaster@palasthotel.de>
  * Author URI:        https://palasthotel.de
  * License:           GPL-3.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain:       environment-info
- * Domain Path:       /languages
  */
 
 namespace Palasthotel\WordPress\EnvironmentInfo;
@@ -101,6 +100,7 @@ function admin_bar(){
 	 */
 	global $wp_admin_bar;
 
+	// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- FILTER_IDENTIFY_SITE is "environment_info_identify_site".
 	$env = apply_filters(FILTER_IDENTIFY_SITE, null);
 
 	if(!isValidEnvInfo($env)) {
@@ -201,10 +201,10 @@ function render_info_page($site){
 	$isActiveClass = $isActive ? "is-active": "";
 	$colors = getEnvColorsStyles($site);
 
-	printf( "<div class='env %s' style='%s'>", esc_attr( $isActiveClass ), $colors->bg );
-		printf( "<div class='env-title' style='%s'>%s</div>", $colors->fg, esc_html( $title ) );
+	printf( "<div class='env %s' style='%s'>", esc_attr( $isActiveClass ), esc_attr( $colors->bg ) );
+		printf( "<div class='env-title' style='%s'>%s</div>", esc_attr( $colors->fg ), esc_html( $title ) );
 		echo "<div class='env-info'>";
-			echo "<p class='env-info' style='$colors->fg'>";
+			printf( "<p class='env-info' style='%s'>", esc_attr( $colors->fg ) );
 			$info = [];
 			if ( isset( $site["hostname"] ) ) {
 				$info[] = sprintf( "Hostname: <code>%s</code>", esc_html( $site["hostname"] ) );
@@ -212,7 +212,7 @@ function render_info_page($site){
 			if ( isset( $site["path"] ) ) {
 				$info[] = sprintf( "Path: <code>%s</code>", esc_html( $site["path"] ) );
 			}
-			echo implode("<br/>", $info);
+			echo wp_kses( implode( "<br/>", $info ), array( 'br' => array(), 'code' => array() ) );
 			echo "</p>";
 		echo "</div>";
 	echo "</div>";
