@@ -82,11 +82,12 @@ submission scan rejects a patch number.
 
 ## Checks
 
-Every PR runs `php -l` against PHP 7.4, 8.2, 8.3 and 8.4, packs the plugin and checks
+Every PR runs `php -l` against PHP 8.0 to 8.4, packs the plugin and checks
 the payload, and checks that the version carriers agree.
 
-The plugin declares `Requires at least: 5.0` (WordPress) and no `Requires PHP` at
-all — the code uses nothing newer than PHP 5.4, and declaring a floor would only
-lock out installs that work today. If you introduce syntax or APIs that need a
-newer PHP, add `Requires PHP` to `public/plugin.php` and `public/readme.txt` in
-the same PR and widen the matrix accordingly.
+The plugin declares `Requires at least: 5.0` (WordPress) and `Requires PHP: 8.0`,
+the lowest version the shared PR check lints (8.0 to 8.4). The code itself would
+still run on older PHP, but nothing checks that any more. If you introduce syntax or
+APIs that need a newer PHP, raise `Requires PHP` in `public/plugin.php` and
+`public/readme.txt` in the same PR and set `php-versions` in
+`.github/workflows/pr.yml` to start there.

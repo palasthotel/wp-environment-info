@@ -5,6 +5,7 @@
  * Description:       Shows in the admin bar which environment you are on
  * Version:           1.1.3
  * Requires at least: 5.0
+ * Requires PHP:      8.0
  * Author:            Palasthotel <webmaster@palasthotel.de>
  * Author URI:        https://palasthotel.de
  * License:           GPL-3.0-or-later
