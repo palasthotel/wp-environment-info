@@ -12,8 +12,5 @@ jobs:
   checks:
     uses: palasthotel/github-workflows/.github/workflows/wp-plugin-pr.yml@v1
     with:
-      # Plugin Check reports errors on this plugin - see https://github.com/palasthotel/wp-environment-info/issues/6.
-      # Remove this line once they are fixed.
-      plugin-check: false
       slug: environment-info
       dev-plugin-name: Environment Info - DEV
