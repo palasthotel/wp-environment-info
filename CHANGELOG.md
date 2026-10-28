@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/palasthotel/wp-environment-info/compare/v1.1.3...v2.0.0) (2026-10-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* requires PHP 8.0 or newer
+
+### Features
+
+* require PHP 8.0 ([84e4c18](https://github.com/palasthotel/wp-environment-info/commit/84e4c183e35a52db339fed665b2f6cdd6e820f83))
+
 ## [1.1.3](https://github.com/palasthotel/wp-environment-info/compare/v1.1.2...v1.1.3) (2026-10-02)
 
 
